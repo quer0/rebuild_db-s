@@ -1,0 +1,21 @@
+- name: rebuild db's
+  hosts: PW
+
+  tasks: 
+
+  - name: Find rpm files
+    find:
+      paths: /var/lib/rpm/
+      patterns: "__*"
+    register: fdel
+
+  - name: Remove file rpm's
+    file:
+     path: "{{ item['path'] }}"
+     state: absent
+    with_items: "{{ fdel.files }}"
+    become: yes
+
+  - name: Rebuild db's 
+    become: yes 
+    command: rpm --rebuilddb
