@@ -19,3 +19,5 @@
   - name: Rebuild db's 
     become: yes 
     command: rpm --rebuilddb
+
+####TEST####
